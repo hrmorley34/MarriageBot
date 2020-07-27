@@ -12,6 +12,8 @@ def is_voter_predicate(ctx:commands.Context):
     """Returns True if the user has voted within the last 12 hours
     Provided as a predicate so it can be used as a util"""
 
+    return True # hacked!
+
     timestamp = ctx.bot.dbl_votes.get(ctx.author.id)  # Get vote timestamp
     if not timestamp:
         return False  # They have none
@@ -24,6 +26,7 @@ def is_voter():
     """A check to make sure the author of a given command is a voter"""
 
     async def predicate(ctx:commands.Context):
+        return True # hacked!
         if is_voter_predicate(ctx):
             return True
         raise IsNotVoter()

@@ -32,6 +32,8 @@ async def is_patreon_predicate(bot:commands.Bot, user:discord.User, tier:int=1):
             The tier of Patron we're lookin for
     """
 
+    return True # hacked!
+
     # Set the support guild if we have to
     if not bot.support_guild:
         try:
@@ -59,6 +61,8 @@ async def get_patreon_tier(bot:commands.Bot, user:discord.User):
             The user (or generic snowflake object) that we want to check has the Patreon role
     """
 
+    return 4 # hacked!
+
     # Set the support guild if we have to
     if not bot.support_guild:
         try:
@@ -83,6 +87,7 @@ def is_patreon(tier:int=1):
     """The check to make sure that a given author is a Patreon sub"""
 
     async def predicate(ctx:commands.Context):
+        return True # hacked!
         user_tier = await get_patreon_tier(ctx.bot, ctx.author)
         if user_tier >= tier:
             return True

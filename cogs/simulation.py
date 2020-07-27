@@ -211,7 +211,7 @@ class Simulation(utils.Cog):
 
     @commands.command(aliases=['intercourse', 'fuck', 'smash', 'heck'], cls=utils.Command)
     @utils.cooldown.cooldown(1, 5, commands.BucketType.user)
-    @commands.is_nsfw()
+    #@commands.is_nsfw() # hacked!
     @utils.checks.bot_is_ready()
     @commands.bot_has_permissions(send_messages=True)
     async def copulate(self, ctx:utils.Context, user:discord.Member):
