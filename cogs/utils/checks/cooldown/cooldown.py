@@ -216,8 +216,6 @@ def cooldown(rate, per, type=commands.BucketType.default, *, cls:commands.Cooldo
     if cls is None:
         cls = Cooldown()
 
-    per = 5 # hacked!
-
     def decorator(func):
         if isinstance(func, commands.Command):
             mapping = cls.mapping or cls.default_mapping_class()

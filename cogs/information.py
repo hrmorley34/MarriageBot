@@ -165,7 +165,7 @@ class Information(utils.Cog):
         await ctx.send(file=discord.File(file_bytes, filename=f'tree_of_{root_user_id}.ged'))
 
     @commands.command(aliases=['tree', 't'], cls=utils.Command)
-    @utils.cooldown.cooldown(1, 60, commands.BucketType.user)
+    @utils.cooldown.cooldown(1, 20, commands.BucketType.user)
     @utils.checks.bot_is_ready()
     @commands.bot_has_permissions(send_messages=True, attach_files=True)
     async def familytree(self, ctx:utils.Context, root:utils.converters.UserID=None):
@@ -181,7 +181,7 @@ class Information(utils.Cog):
             raise e
 
     @commands.command(aliases=['st'], cls=utils.Command)
-    @utils.cooldown.cooldown(1, 60, commands.BucketType.user)
+    @utils.cooldown.cooldown(1, 20, commands.BucketType.user)
     @utils.checks.has_donator_perks("stupidtree_command")
     @utils.checks.bot_is_ready()
     @commands.bot_has_permissions(send_messages=True, attach_files=True)

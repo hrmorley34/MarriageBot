@@ -57,7 +57,7 @@ class BotSettings(utils.Cog):
 
     @commands.group(cls=utils.Group, enabled=False)
     @commands.bot_has_permissions(send_messages=True, embed_links=True, add_reactions=True)
-    @utils.cooldown.cooldown(1, 60, commands.BucketType.member)
+    @utils.cooldown.cooldown(1, 20, commands.BucketType.member)
     @commands.guild_only()
     async def usersettings(self, ctx:utils.Context):
         """Run the bot setup"""

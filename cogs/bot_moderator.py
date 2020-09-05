@@ -19,7 +19,7 @@ class ModeratorOnly(utils.Cog):
 
     @commands.command(cls=utils.Command, hidden=True)
     @commands.bot_has_permissions(send_messages=True)
-    @utils.cooldown.cooldown(1, 60, commands.BucketType.user)
+    @utils.cooldown.cooldown(1, 20, commands.BucketType.user)
     async def cachename(self, ctx:utils.Context, user:utils.converters.UserID=None):
         """Removes a user from the propsal cache."""
 
