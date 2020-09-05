@@ -40,11 +40,12 @@ class MiscCommands(utils.Cog):
     async def donate(self, ctx:utils.Context):
         """Gives you the creator's donation links"""
 
-        await ctx.send(f"See `{ctx.prefix}perks` for more information!\n{self.bot.config['command_data']['patreon']}", embeddify=False)
+        await ctx.send(f"See `{ctx.prefix}perks` for more information!\n<{self.bot.config['command_data']['patreon']}>", embeddify=False)
 
     @commands.command(cls=utils.Command)
     @utils.cooldown.cooldown(1, 5, commands.BucketType.user)
     @commands.bot_has_permissions(send_messages=True)
+    @utils.checks.is_config_set('command_data', 'invite_command_enabled')
     async def invite(self, ctx:utils.Context):
         """Gives you an invite link for the bot"""
 
@@ -63,14 +64,16 @@ class MiscCommands(utils.Cog):
     @utils.cooldown.cooldown(1, 5, commands.BucketType.user)
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(send_messages=True)
-    async def echo(self, ctx:utils.Context, *, content:commands.clean_content):
-        """Echos a saying"""
+    @utils.checks.is_config_set('command_data', 'echo_command_enabled')
+    async def echo(self, ctx:utils.Context, *, content:str):
+        """Echos the given content into the channel"""
 
         await ctx.send(content, embeddify=False)
 
     @commands.command(cls=utils.Command)
     @utils.cooldown.cooldown(1, 5, commands.BucketType.user)
     @commands.bot_has_permissions(send_messages=True, embed_links=True)
+    @utils.checks.is_config_set('command_data', 'stats_command_enabled')
     async def perks(self, ctx:utils.Context):
         """Shows you the perks associated with different support tiers"""
 
@@ -123,12 +126,12 @@ class MiscCommands(utils.Cog):
 
         # Make embed
         e = discord.Embed()
-        e.add_field(name=f'Normal Users', value=f"Gives you access to:\n* " + '\n* '.join(normal_users), inline=False)
-        e.add_field(name=f'Voting (m!vote)', value=f"Gives you access to:\n* " + '\n* '.join(voting_perks), inline=False)
-        e.add_field(name=f'T1 Patreon Donation (m!donate)', value=f"Gives you access to:\n* " + '\n* '.join(t1_donate_perks), inline=False)
-        e.add_field(name=f'T2 Patreon Donation (m!donate)', value=f"Gives you access to:\n* " + '\n* '.join(t2_donate_perks), inline=False)
-        e.add_field(name=f'T3 Patreon Donation (m!donate)', value=f"Gives you access to:\n* " + '\n* '.join(t3_donate_perks), inline=False)
-        e.add_field(name=f'MarriageBot Gold (m!gold)', value=f"Gvies you access to:\n* " + '\n* '.join(gold_perks), inline=False)
+        e.add_field(name='Normal Users', value="Gives you access to:\n* " + '\n* '.join(normal_users), inline=False)
+        e.add_field(name=f'Voting ({ctx.prefix}vote)', value="Gives you access to:\n* " + '\n* '.join(voting_perks), inline=False)
+        e.add_field(name=f'T1 Subscriber ({ctx.prefix}donate)', value="Gives you access to:\n* " + '\n* '.join(t1_donate_perks), inline=False)
+        e.add_field(name=f'T2 Subscriber ({ctx.prefix}donate)', value="Gives you access to:\n* " + '\n* '.join(t2_donate_perks), inline=False)
+        e.add_field(name=f'T3 Subscriber ({ctx.prefix}donate)', value="Gives you access to:\n* " + '\n* '.join(t3_donate_perks), inline=False)
+        e.add_field(name=f'MarriageBot Gold ({ctx.prefix}gold)', value="Gives you access to:\n* " + '\n* '.join(gold_perks), inline=False)
         await ctx.send(embed=e)
 
     @commands.command(aliases=['status'], cls=utils.Command)

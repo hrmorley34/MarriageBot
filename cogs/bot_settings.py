@@ -16,7 +16,7 @@ class BotSettings(utils.Cog):
         if not new_prefix:
             new_prefix = self.bot.config['prefix']['default_prefix']
         if len(new_prefix) > 30:
-            return await ctx.send("Your prefix can't be longer than 30 characters.")
+            return await ctx.send("The maximum length a prefix can be is 30 characters.")
 
         # Update db
         prefix_key = 'gold_prefix' if self.bot.is_server_specific else 'prefix'
@@ -29,7 +29,7 @@ class BotSettings(utils.Cog):
 
     @commands.group(cls=utils.Group, enabled=False)
     @commands.has_permissions(manage_guild=True)
-    @commands.bot_has_permissions(send_messages=True, embed_links=True)
+    @commands.bot_has_permissions(send_messages=True, embed_links=True, add_reactions=True)
     @commands.guild_only()
     async def setup(self, ctx:utils.Context):
         """Run the bot setup"""
@@ -56,7 +56,7 @@ class BotSettings(utils.Cog):
             pass
 
     @commands.group(cls=utils.Group, enabled=False)
-    @commands.bot_has_permissions(send_messages=True, embed_links=True)
+    @commands.bot_has_permissions(send_messages=True, embed_links=True, add_reactions=True)
     @utils.cooldown.cooldown(1, 60, commands.BucketType.member)
     @commands.guild_only()
     async def usersettings(self, ctx:utils.Context):
@@ -77,8 +77,11 @@ class BotSettings(utils.Cog):
                 'callback': utils.SettingsMenuOption.get_set_user_settings_callback('user_settings', 'setting_id'),
             },
         )
-        await menu.start(ctx)
-        await ctx.send("Done setting up!")
+        try:
+            await menu.start(ctx)
+            await ctx.send("Done setting up!")
+        except utils.errors.InvokedMetaCommand:
+            pass
 
 
 def setup(bot:utils.Bot):
