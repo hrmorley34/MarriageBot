@@ -134,7 +134,7 @@ class MiscCommands(utils.Cog):
         e.add_field(name=f'MarriageBot Gold ({ctx.prefix}gold)', value="Gives you access to:\n* " + '\n* '.join(gold_perks), inline=False)
         await ctx.send(embed=e)
 
-    @commands.command(aliases=['status'], cls=utils.Command)
+    @commands.command(aliases=['status','botinfo'], cls=utils.Command)
     @utils.cooldown.cooldown(1, 5, commands.BucketType.user)
     @commands.bot_has_permissions(send_messages=True)
     async def stats(self, ctx:utils.Context):
@@ -233,10 +233,11 @@ class MiscCommands(utils.Cog):
     @commands.command(cls=utils.Command)
     @commands.guild_only()
     @commands.bot_has_permissions(send_messages=True)
-    async def shard(self, ctx:utils.Context):
+    async def shard(self, ctx:utils.Context, guild_id:int=None):
         """Gives you the shard that your server is running on"""
 
-        await ctx.send(f"The shard that your server is on is shard `{ctx.guild.shard_id}`.")
+        guild_id = guild_id or ctx.guild.id
+        await ctx.send(f"The shard for server ID `{guild_id}` is `{(guild_id >> 22) % self.bot.shard_count}`. If all instances have `{len(self.bot.shard_ids)}` shards, that guild would be on instance `{((guild_id >> 22) % self.bot.shard_count) // len(self.bot.shard_ids)}`")
 
     @commands.command(cls=utils.Command, aliases=['kitty'], hidden=True)
     @commands.bot_has_permissions(send_messages=True)
@@ -244,7 +245,7 @@ class MiscCommands(utils.Cog):
         """Gives you some cats innit"""
 
         await ctx.channel.trigger_typing()
-        headers = {"User-Agent": "MarriageBot/1.0.0 - Discord@Caleb#2831"}
+        headers = {"User-Agent": "MarriageBot/1.0.0 - Discord@Kae#0004"}
         async with self.bot.session.get("https://api.thecatapi.com/v1/images/search", headers=headers) as r:
             data = await r.json()
         with utils.Embed(use_random_colour=True) as embed:
