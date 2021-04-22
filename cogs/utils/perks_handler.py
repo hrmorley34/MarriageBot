@@ -43,6 +43,15 @@ TIER_VOTER = MarriageBotPerks(
 TIER_NONE = MarriageBotPerks()
 
 
+TIER_BRUH = MarriageBotPerks(
+    max_children=100,
+    max_partners=1,  # for now...
+    can_run_stupidtree=True,
+    can_run_disownall=True,
+    tree_command_cooldown=5,
+)
+
+
 async def get_marriagebot_perks(bot:utils.Bot, user_id:int) -> MarriageBotPerks:
     """
     Get the specific perks that any given user has.
@@ -54,6 +63,8 @@ async def get_marriagebot_perks(bot:utils.Bot, user_id:int) -> MarriageBotPerks:
     Returns:
         MarriageBotPerks: All of the perks that the calling user has.
     """
+
+    return TIER_BRUH  # bruh
 
     # Override stuff for owners
     if user_id in bot.owner_ids:
