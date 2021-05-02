@@ -17,8 +17,8 @@ def escape_markdown(value:str) -> str:
 class TickPayloadCheckResult(object):
 
     BOOLEAN_EMOJIS = {
-        "TICK": ("<:tick_filled_yes:784976310366634034>", "\N{HEAVY CHECK MARK}",),
-        "CROSS": ("<:tick_filled_no:784976328231223306>", "\N{HEAVY MULTIPLICATION X}",),
+        "TICK": ("\N{HEAVY CHECK MARK}",),
+        "CROSS": ("\N{HEAVY MULTIPLICATION X}",),
     }
 
     def __init__(self, emoji):
